@@ -15,13 +15,11 @@ Client uses API Key for test environment. If you want to use production environm
 your own key received from REGON API admins.
 
 Notes
-* ***bir** means: Baza Internetowa REGON ;)*
+* ***bir** means: Baza Internetowa REGON * :sweat_smile:
 * *JDK 11 is used in this project as default* 
 * *Enable annotation processing in your IDE, since Lombok is used* 
 
-##Let's connect
-If you find this useful, please visit our website: https://www.nexocode.com/
-
-Read our blog: https://www.nexocode.com/blog/
-
-If you understand what's going on here, apply :)  https://www.nexocode.com/careers 
+## Let's connect 
+* If you find this useful, please visit our website: https://www.nexocode.com/
+* Read our blog: https://www.nexocode.com/blog/
+* If you understand what's going on here, apply: https://www.nexocode.com/careers :sunglasses:
