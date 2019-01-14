@@ -1,0 +1,3 @@
+regon-api:
+  url: 'https://wyszukiwarkaregontest.stat.gov.pl/wsBIR/UslugaBIRzewnPubl.svc'
+  key: 'abcde12345abcde12345'
