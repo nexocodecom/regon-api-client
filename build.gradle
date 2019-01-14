@@ -1,0 +1,89 @@
+buildscript {
+    ext {
+        springBootVersion = '2.1.1.RELEASE'
+        lombokVersion = "1.18.4"
+    }
+    repositories {
+
+        mavenCentral()
+        maven { url "https://repo.spring.io/snapshot" }
+        maven { url "https://repo.spring.io/milestone" }
+        maven { url 'https://plugins.gradle.org/m2/' }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+repositories {
+    mavenCentral()
+    maven { url "https://repo.spring.io/snapshot" }
+    maven { url "https://repo.spring.io/milestone" }
+}
+
+apply plugin: 'idea'
+apply plugin: 'java'
+
+sourceCompatibility = 11
+
+group = 'com.bir'
+version = "1.0.0-SNAPSHOT"
+
+jar {
+    manifest {
+        attributes('Implementation-Title': project.name, 'Implementation-Version': project.version)
+    }
+}
+
+def sourceGeneratedDir = 'src/main/java'
+
+configurations {
+    jaxb
+}
+
+dependencies {
+
+    compile("org.springframework.boot:spring-boot-starter-web-services:${springBootVersion}")
+    compile("com.sun.xml.bind:jaxb-impl:2.3.0")
+    compile("com.sun.xml.bind:jaxb-core:2.3.0")
+    compile("org.slf4j:slf4j-api:1.7.9")
+    compile("org.apache.httpcomponents:httpclient:4.5.6")
+    compile("org.apache.ws.commons.axiom:axiom-api:1.2.16")
+    compile("org.apache.ws.commons.axiom:axiom-impl:1.2.16")
+    compile("org.jvnet.mimepull:mimepull:1.9.10")
+
+    compileOnly("org.projectlombok:lombok:${lombokVersion}")
+
+    annotationProcessor("org.projectlombok:lombok:${lombokVersion}")
+    testAnnotationProcessor("org.projectlombok:lombok:${lombokVersion}")
+
+    jaxb "javax.xml.bind:jaxb-api:2.3.0"
+    jaxb "com.sun.xml.bind:jaxb-impl:2.3.0"
+    jaxb "com.sun.xml.bind:jaxb-core:2.3.0"
+    jaxb "com.sun.xml.bind:jaxb-xjc:2.3.1"
+    jaxb "javax.activation:activation:1.1.1"
+}
+
+configurations.all {
+    exclude group: "commons-logging", module: "commons-logging"
+}
+
+task genJaxbStubs {
+    doLast() {
+        project.ant {
+
+            mkdir(dir: sourceGeneratedDir)
+
+            taskdef name: "xjc", classname: "com.sun.tools.xjc.XJCTask",
+                    classpath: configurations.jaxb.asPath
+
+            xjc(destdir: sourceGeneratedDir, schema: "$projectDir/spec/bir/UslugaBIRzewnPubl_wsdl0.xsd",
+                    package: "com.bir.wsdl", binding: "$projectDir/spec/jaxb-bindings.xjb", fork: true) {
+                arg line: '-XautoNameResolution'
+                arg line: '-wsdl'
+                arg line: '-extension'
+                arg line: '-verbose'
+            }
+        }
+    }
+}
