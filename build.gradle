@@ -26,7 +26,7 @@ apply plugin: 'java'
 
 sourceCompatibility = 11
 
-group = 'com.bir'
+group = 'com.nexocode.bir'
 version = "1.0.0-SNAPSHOT"
 
 jar {
@@ -78,7 +78,7 @@ task genJaxbStubs {
                     classpath: configurations.jaxb.asPath
 
             xjc(destdir: sourceGeneratedDir, schema: "$projectDir/spec/bir/UslugaBIRzewnPubl_wsdl0.xsd",
-                    package: "com.bir.wsdl", binding: "$projectDir/spec/jaxb-bindings.xjb", fork: true) {
+                    package: "com.nexocode.bir.wsdl", binding: "$projectDir/spec/jaxb-bindings.xjb", fork: true) {
                 arg line: '-XautoNameResolution'
                 arg line: '-wsdl'
                 arg line: '-extension'
